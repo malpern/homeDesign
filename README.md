@@ -9,6 +9,8 @@ Four distinct design directions for transforming a living room, generated with G
 - **Real tabs**: Design and Layout are separate pages—clicking a tab does a full page refresh
 - **Interactive hotspots**: Hover over images to discover key design decisions
 - **Regenerate**: Enter refinement guidance below any concept and regenerate with Gemini Nano Banana Pro
+- **Back/Forward**: Navigate through earlier and later versions after regenerating
+- **Incremental edits**: Regeneration keeps the current image and applies only your requested change (use "brand new design" to start over)
 
 ## Regenerate Feature
 

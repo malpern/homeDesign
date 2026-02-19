@@ -37,13 +37,24 @@ export default {
       return jsonResponse({ error: "Invalid JSON body" }, 400);
     }
 
-    const { prompt } = body;
+    const { prompt, currentImageBase64, currentImageMime } = body;
     if (!prompt || typeof prompt !== "string") {
       return jsonResponse({ error: "prompt is required" }, 400);
     }
 
+    const parts = [];
+    if (currentImageBase64 && typeof currentImageBase64 === "string") {
+      parts.push({
+        inlineData: {
+          mimeType: currentImageMime || "image/jpeg",
+          data: currentImageBase64,
+        },
+      });
+    }
+    parts.push({ text: prompt });
+
     const requestBody = {
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [{ parts }],
       generationConfig: {
         responseModalities: ["TEXT", "IMAGE"],
         imageConfig: {

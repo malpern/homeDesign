@@ -400,6 +400,40 @@
             display: block;
         }
 
+        /* History nav (back/forward) */
+        .history-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .history-btn {
+            padding: 6px 12px;
+            font-family: 'Georgia', serif;
+            font-size: 0.85rem;
+            background: #e8e4df;
+            color: #444;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .history-btn:hover:not(:disabled) {
+            background: #ddd;
+        }
+
+        .history-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .history-version {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
         /* Regenerate section */
         .regenerate-section {
             margin-top: 20px;
@@ -576,8 +610,13 @@
             </div>
         </div>
         <div class="regenerate-section">
+            <div class="history-nav">
+                <button type="button" class="history-btn history-back" data-concept-id="1">← Back</button>
+                <span class="history-version" data-concept-id="1">Version 1 of 1</span>
+                <button type="button" class="history-btn history-forward" data-concept-id="1">Forward →</button>
+            </div>
             <label for="guidance-1">Refine this concept</label>
-            <input type="text" id="guidance-1" placeholder="e.g. Add more plants, use darker wood tones, remove the dog…" data-concept-id="1">
+            <input type="text" id="guidance-1" placeholder="e.g. Add more plants, darker wood… (or &quot;brand new design&quot; to start over)" data-concept-id="1">
             <button type="button" class="regenerate-btn" data-concept-id="1">Regenerate</button>
         </div>
         <div class="concept-details">
@@ -631,6 +670,11 @@
             </div>
         </div>
         <div class="regenerate-section">
+            <div class="history-nav">
+                <button type="button" class="history-btn history-back" data-concept-id="2">← Back</button>
+                <span class="history-version" data-concept-id="2">Version 1 of 1</span>
+                <button type="button" class="history-btn history-forward" data-concept-id="2">Forward →</button>
+            </div>
             <label for="guidance-2">Refine this concept</label>
             <input type="text" id="guidance-2" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="2">
             <button type="button" class="regenerate-btn" data-concept-id="2">Regenerate</button>
@@ -686,6 +730,11 @@
             </div>
         </div>
         <div class="regenerate-section">
+            <div class="history-nav">
+                <button type="button" class="history-btn history-back" data-concept-id="3">← Back</button>
+                <span class="history-version" data-concept-id="3">Version 1 of 1</span>
+                <button type="button" class="history-btn history-forward" data-concept-id="3">Forward →</button>
+            </div>
             <label for="guidance-3">Refine this concept</label>
             <input type="text" id="guidance-3" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="3">
             <button type="button" class="regenerate-btn" data-concept-id="3">Regenerate</button>
@@ -741,6 +790,11 @@
             </div>
         </div>
         <div class="regenerate-section">
+            <div class="history-nav">
+                <button type="button" class="history-btn history-back" data-concept-id="4">← Back</button>
+                <span class="history-version" data-concept-id="4">Version 1 of 1</span>
+                <button type="button" class="history-btn history-forward" data-concept-id="4">Forward →</button>
+            </div>
             <label for="guidance-4">Refine this concept</label>
             <input type="text" id="guidance-4" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="4">
             <button type="button" class="regenerate-btn" data-concept-id="4">Regenerate</button>
@@ -781,6 +835,64 @@
         { src: 'images/03_moody_library.jpg', caption: 'Concept 03 — Moody Library Lounge' },
         { src: 'images/04_california_bohemian.jpg', caption: 'Concept 04 — California Bohemian' }
     ];
+
+    // Per-concept history for back/forward
+    const CONCEPT_HISTORY = {};
+
+    function initConceptHistory(conceptId) {
+        const container = document.querySelector('.image-container[data-concept-id="' + conceptId + '"]');
+        const img = container?.querySelector('img');
+        const designGoalEl = document.querySelector('.design-goal[data-concept-id="' + conceptId + '"]');
+        const promptEl = document.querySelector('.prompt-display[data-concept-id="' + conceptId + '"]');
+        if (!img || !designGoalEl || !promptEl) return;
+        CONCEPT_HISTORY[conceptId] = {
+            images: [{ src: img.src, designGoal: designGoalEl.textContent, prompt: promptEl.textContent }],
+            index: 0
+        };
+    }
+
+    function showHistoryVersion(conceptId) {
+        const h = CONCEPT_HISTORY[conceptId];
+        if (!h || !h.images.length) return;
+        const entry = h.images[h.index];
+        const container = document.querySelector('.image-container[data-concept-id="' + conceptId + '"]');
+        const img = container?.querySelector('img');
+        const designGoalEl = document.querySelector('.design-goal[data-concept-id="' + conceptId + '"]');
+        const promptEl = document.querySelector('.prompt-display[data-concept-id="' + conceptId + '"]');
+        if (img) img.src = entry.src;
+        if (designGoalEl) designGoalEl.textContent = entry.designGoal;
+        if (promptEl) promptEl.textContent = entry.prompt;
+        images[conceptId] = { ...images[conceptId], src: entry.src };
+        const versionEl = document.querySelector('.history-version[data-concept-id="' + conceptId + '"]');
+        const backBtn = document.querySelector('.history-back[data-concept-id="' + conceptId + '"]');
+        const fwdBtn = document.querySelector('.history-forward[data-concept-id="' + conceptId + '"]');
+        if (versionEl) versionEl.textContent = 'Version ' + (h.index + 1) + ' of ' + h.images.length;
+        if (backBtn) backBtn.disabled = h.index <= 0;
+        if (fwdBtn) fwdBtn.disabled = h.index >= h.images.length - 1;
+    }
+
+    function isBrandNewDesign(text) {
+        const t = (text || '').toLowerCase();
+        return /brand\s*new|completely\s*new|from\s*scratch|start\s*over|new\s*design/.test(t);
+    }
+
+    async function getImageBase64(imgSrc) {
+        if (imgSrc.startsWith('data:')) {
+            const m = imgSrc.match(/^data:([^;]+);base64,(.+)$/);
+            if (m) return { base64: m[2], mime: (m[1].split('/')[1] || 'jpeg') };
+        }
+        const res = await fetch(imgSrc);
+        const blob = await res.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const m = String(reader.result).match(/^data:([^;]+);base64,(.+)$/);
+                resolve({ base64: m[2], mime: (m[1].split('/')[1] || 'jpeg') });
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
 
     const CONCEPT_DATA = {
         1: {
@@ -860,13 +972,38 @@
         const data = CONCEPT_DATA[conceptId];
         if (!data) return;
 
-        const mergedPrompt = userGuidance
-            ? data.prompt + ' Additional modifications to incorporate: ' + userGuidance
-            : data.prompt;
+        const wantBrandNew = isBrandNewDesign(userGuidance);
+        let prompt, mergedDesignGoal;
+        let currentImageBase64 = null, currentImageMime = null;
 
-        const mergedDesignGoal = userGuidance
-            ? data.designGoal + ' Refinement: ' + userGuidance
-            : data.designGoal;
+        if (wantBrandNew) {
+            prompt = userGuidance
+                ? data.prompt + ' Additional modifications: ' + userGuidance
+                : data.prompt;
+            mergedDesignGoal = userGuidance
+                ? data.designGoal + ' Refinement: ' + userGuidance
+                : data.designGoal;
+        } else {
+            try {
+                const imgData = await getImageBase64(img.src);
+                currentImageBase64 = imgData.base64;
+                currentImageMime = imgData.mime;
+            } catch (e) {
+                console.warn('Could not get image for edit, using full prompt', e);
+            }
+            prompt = userGuidance
+                ? 'Edit this interior design image. Keep everything exactly as it is. Only make this change: ' + userGuidance + '. Output the modified image with no other changes.'
+            : data.prompt;
+            mergedDesignGoal = userGuidance
+                ? data.designGoal + ' Refinement: ' + userGuidance
+                : data.designGoal;
+        }
+
+        const body = { conceptId, prompt };
+        if (currentImageBase64) {
+            body.currentImageBase64 = currentImageBase64;
+            body.currentImageMime = currentImageMime;
+        }
 
         container.classList.add('loading');
         btn.disabled = true;
@@ -876,7 +1013,7 @@
             const res = await fetch(apiBase + '/api/regenerate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ conceptId, prompt: mergedPrompt })
+                body: JSON.stringify(body)
             });
 
             if (!res.ok) {
@@ -887,11 +1024,19 @@
             const { image, mimeType } = await res.json();
             const dataUrl = 'data:' + (mimeType || 'image/png') + ';base64,' + image;
 
+            const h = CONCEPT_HISTORY[conceptId];
+            if (h) {
+                h.images = h.images.slice(0, h.index + 1);
+                h.images.push({ src: dataUrl, designGoal: mergedDesignGoal, prompt });
+                h.index = h.images.length - 1;
+            }
+
             img.src = dataUrl;
             images[conceptId] = { ...images[conceptId], src: dataUrl };
             designGoalEl.textContent = mergedDesignGoal;
-            promptEl.textContent = mergedPrompt;
+            promptEl.textContent = prompt;
             input.value = '';
+            showHistoryVersion(conceptId);
         } catch (err) {
             alert('Could not regenerate: ' + (err.message || 'Unknown error'));
         } finally {
@@ -899,6 +1044,28 @@
             btn.disabled = false;
         }
     }
+
+    document.querySelectorAll('.history-back').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const conceptId = parseInt(btn.dataset.conceptId, 10);
+            const h = CONCEPT_HISTORY[conceptId];
+            if (h && h.index > 0) {
+                h.index--;
+                showHistoryVersion(conceptId);
+            }
+        });
+    });
+
+    document.querySelectorAll('.history-forward').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const conceptId = parseInt(btn.dataset.conceptId, 10);
+            const h = CONCEPT_HISTORY[conceptId];
+            if (h && h.index < h.images.length - 1) {
+                h.index++;
+                showHistoryVersion(conceptId);
+            }
+        });
+    });
 
     document.querySelectorAll('.regenerate-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -914,6 +1081,11 @@
                 regenerateConcept(conceptId);
             }
         });
+    });
+
+    [1, 2, 3, 4].forEach(function(id) {
+        initConceptHistory(id);
+        showHistoryVersion(id);
     });
 </script>
 

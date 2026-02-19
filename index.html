@@ -879,7 +879,7 @@
     async function getImageBase64(imgSrc) {
         if (imgSrc.startsWith('data:')) {
             const m = imgSrc.match(/^data:([^;]+);base64,(.+)$/);
-            if (m) return { base64: m[2], mime: (m[1].split('/')[1] || 'jpeg') };
+            if (m) return { base64: m[2], mime: m[1] || 'image/jpeg' };
         }
         const res = await fetch(imgSrc);
         const blob = await res.blob();
@@ -887,7 +887,7 @@
             const reader = new FileReader();
             reader.onload = () => {
                 const m = String(reader.result).match(/^data:([^;]+);base64,(.+)$/);
-                resolve({ base64: m[2], mime: (m[1].split('/')[1] || 'jpeg') });
+                resolve({ base64: m[2], mime: m[1] || 'image/jpeg' });
             };
             reader.onerror = reject;
             reader.readAsDataURL(blob);

@@ -871,6 +871,15 @@
         if (fwdBtn) fwdBtn.disabled = h.index >= h.images.length - 1;
     }
 
+    function buildEditPrompt(userGuidance) {
+        const g = userGuidance.toLowerCase();
+        const isRemoval = /\b(remove|delete|take out|get rid of|eliminate)\b/.test(g);
+        if (isRemoval) {
+            return 'Edit this interior design photo. ' + userGuidance + '. Where the removed item was, show the floor, rug, or wall naturally—seamlessly fill the space so it looks like the room was photographed without that item. Keep everything else identical. Output the modified photorealistic image.';
+        }
+        return 'Edit this interior design image. Keep everything exactly as it is. Only make this change: ' + userGuidance + '. Output the modified image with no other changes.';
+    }
+
     function isBrandNewDesign(text) {
         const t = (text || '').toLowerCase();
         return /brand\s*new|completely\s*new|from\s*scratch|start\s*over|new\s*design/.test(t);
@@ -992,7 +1001,7 @@
                 console.warn('Could not get image for edit, using full prompt', e);
             }
             prompt = userGuidance
-                ? 'Edit this interior design image. Keep everything exactly as it is. Only make this change: ' + userGuidance + '. Output the modified image with no other changes.'
+                ? buildEditPrompt(userGuidance)
             : data.prompt;
             mergedDesignGoal = userGuidance
                 ? data.designGoal + ' Refinement: ' + userGuidance

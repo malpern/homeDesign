@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Living Room Redesign Concepts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -96,17 +99,123 @@
             color: #1a1a1a;
         }
 
-        .concept img {
-            width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        /* Image container with hotspots */
+        .image-container {
+            position: relative;
             margin-bottom: 24px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        .concept img:hover {
+        .image-container img {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .image-container:hover img {
             transform: scale(1.005);
+        }
+
+        /* Hotspot dots */
+        .hotspot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 180, 220, 0.7) 0%, rgba(140, 180, 220, 0.2) 60%, transparent 70%);
+            border: 1.5px solid rgba(140, 180, 220, 0.5);
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.6s ease 0.8s;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(160, 195, 230, 0.9);
+            transform: translate(-50%, -50%);
+        }
+
+        .hotspot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1px solid rgba(140, 180, 220, 0.4);
+            transform: translate(-50%, -50%);
+            animation: hotspot-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes hotspot-pulse {
+            0%, 100% { width: 18px; height: 18px; opacity: 0.6; }
+            50% { width: 28px; height: 28px; opacity: 0; }
+        }
+
+        .image-container:hover .hotspot {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Tooltip */
+        .hotspot-tooltip {
+            position: absolute;
+            width: 280px;
+            background: rgba(15, 15, 15, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 22px 24px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+            z-index: 20;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hotspot:hover .hotspot-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hotspot-tooltip .tooltip-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: rgba(200, 180, 160, 1);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .hotspot-tooltip .tooltip-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(220, 215, 210, 0.9);
+            line-height: 1.55;
+            letter-spacing: 0.01em;
+        }
+
+        .hotspot-tooltip .tooltip-line {
+            width: 30px;
+            height: 1px;
+            background: rgba(200, 180, 160, 0.4);
+            margin: 10px 0;
         }
 
         .concept-details {
@@ -225,6 +334,171 @@
             border-top: 1px solid #ddd;
         }
 
+        .hover-hint {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: -16px;
+            margin-bottom: 40px;
+        }
+
+        /* Tabs */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin: 0 auto;
+            padding: 12px 20px 0;
+            max-width: 1040px;
+            background: #ebe8e3;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            background: transparent;
+            border: none;
+            border-radius: 6px 6px 0 0;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: #333;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .tab-btn.active {
+            color: #1a1a1a;
+            background: #f5f2ed;
+            font-weight: 500;
+        }
+
+        .tab-content {
+            max-width: 1040px;
+            margin: 0 auto 40px;
+            background: #f5f2ed;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Regenerate section */
+        .regenerate-section {
+            margin-top: 20px;
+            padding: 16px;
+            background: #faf9f7;
+            border-radius: 8px;
+            border: 1px solid #e8e4df;
+        }
+
+        .regenerate-section label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .regenerate-section input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+
+        .regenerate-section input[type="text"]::placeholder {
+            color: #aaa;
+        }
+
+        .regenerate-section input[type="text"]:focus {
+            outline: none;
+            border-color: #8c9;
+            box-shadow: 0 0 0 2px rgba(136, 204, 153, 0.2);
+        }
+
+        .regenerate-btn {
+            padding: 10px 20px;
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            background: #2c2c2c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .regenerate-btn:hover:not(:disabled) {
+            background: #444;
+        }
+
+        .regenerate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Spinner overlay */
+        .image-container.loading {
+            pointer-events: none;
+        }
+
+        .image-container .spinner-overlay {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            inset: 0;
+            background: rgba(245, 242, 237, 0.9);
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+            border-radius: 8px;
+        }
+
+        .image-container.loading .spinner-overlay {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #e8e4df;
+            border-top-color: #2c2c2c;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .spinner-text {
+            position: absolute;
+            bottom: 24px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 700px) {
             header h1 { font-size: 1.6rem; }
             .concept h2 { font-size: 1.3rem; }
@@ -232,6 +506,8 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            .hotspot-tooltip { width: 220px; padding: 16px 18px; }
+            .hotspot-tooltip .tooltip-text { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -239,9 +515,16 @@
 
 <header>
     <h1>Living Room Redesign Concepts</h1>
-    <p>Four distinct design directions for transforming our living room, generated with Gemini 3 Pro Image.</p>
+    <p>Design directions and layout optimizations for our living room, generated with Gemini 3 Pro Image.</p>
 </header>
 
+<nav class="tab-nav">
+    <button type="button" class="tab-btn active" data-tab="design">Design Concepts</button>
+    <button type="button" class="tab-btn" data-tab="layout">Layout Optimization</button>
+</nav>
+
+<div class="tab-content">
+<div id="tab-design" class="tab-panel active">
 <section class="original-section">
     <h2>Current Room</h2>
     <img src="images/original_living_room.jpg" alt="Current living room" data-index="0" onclick="openLightbox(0)">
@@ -249,20 +532,61 @@
 
 <div class="divider"></div>
 
+<p class="hover-hint">Hover over any image to discover key design decisions</p>
+
 <section class="concepts">
 
     <article class="concept">
         <div class="concept-number">Concept 01</div>
         <h2>Mid-Century Modern Warmth</h2>
-        <img src="images/01_midcentury_modern.jpg" alt="Mid-Century Modern redesign" data-index="1" onclick="openLightbox(1)">
+        <div class="image-container" data-concept-id="1">
+            <img src="images/01_midcentury_modern.jpg" alt="Mid-Century Modern redesign" data-index="1" onclick="openLightbox(1)">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 28%; top: 52%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -40px;">
+                    <div class="tooltip-title">The Eames Lounge</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">The iconic Eames Lounge Chair anchors the reading corner &mdash; its molded walnut shell and supple leather embody the perfect marriage of craft and comfort that defined mid-century design.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 48%; top: 10%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
+                    <div class="tooltip-title">Nelson Bubble Pendant</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A George Nelson Bubble Pendant replaces the sputnik fixture &mdash; its soft, diffused glow creates an intimate atmosphere while its organic form balances the room's angular lines.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 13%; top: 42%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">Walnut Shelving</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Open walnut shelving with brass brackets transforms the storage wall into a curated gallery &mdash; warm wood tones replace the cool white units, making books feel like art.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 76%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: -170px;">
+                    <div class="tooltip-title">Vintage Persian Rug</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A vintage Persian rug in warm rusts and golds grounds the entire room &mdash; its patina and pattern add soul that a new rug simply cannot replicate.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-1">Refine this concept</label>
+            <input type="text" id="guidance-1" placeholder="e.g. Add more plants, use darker wood tones, remove the dog…" data-concept-id="1">
+            <button type="button" class="regenerate-btn" data-concept-id="1">Regenerate</button>
+        </div>
         <div class="concept-details">
             <div>
                 <h3>Design Goals</h3>
-                <p>Transform the room into a warm, sophisticated space inspired by the 1950s&ndash;60s design movement. The focus is on rich natural materials&mdash;walnut wood, camel leather, and brass&mdash;paired with warm earth-toned textiles. The iconic Eames lounge chair becomes the statement piece, while a Nelson Bubble pendant replaces the existing fixture. Open walnut shelving creates a more curated, gallery-like feel. The overall palette shifts from cool grays to warm golds, rusts, and cognacs, with Cooper lounging happily by the fireplace on a vintage Persian rug.</p>
+                <p class="design-goal" data-concept-id="1">Transform the room into a warm, sophisticated space inspired by the 1950s&ndash;60s design movement. The focus is on rich natural materials&mdash;walnut wood, camel leather, and brass&mdash;paired with warm earth-toned textiles. The iconic Eames lounge chair becomes the statement piece, while a Nelson Bubble pendant replaces the existing fixture. Open walnut shelving creates a more curated, gallery-like feel. The overall palette shifts from cool grays to warm golds, rusts, and cognacs, with Cooper lounging happily by the fireplace on a vintage Persian rug.</p>
             </div>
             <div>
                 <h3>Prompt Used</h3>
-                <div class="prompt-text">Redesign this living room in a warm mid-century modern style. The room has the same layout and architecture - dark hardwood floors, marble fireplace with wood mantel, bay windows with crown molding, and a large bookshelf wall on the left. Replace the gray sofa with a rich camel-colored leather sofa with clean lines and tapered walnut legs. Swap the dark blue wingback chair for a classic Eames-style lounge chair and ottoman in walnut shell with black leather cushions. Replace the Moroccan shag rug with a vintage Persian rug in warm rust, gold, and cream tones. Update the bookshelf to beautiful open walnut wood shelving with brass bracket accents. Replace the chandelier with a large Nelson Bubble pendant lamp. Add warm brass accents - a brass arc floor lamp, brass picture frames. Keep the marble fireplace, hang a large colorful abstract painting in warm oranges and golds above the mantel. Add a larger round walnut coffee table with hairpin legs. A beautiful golden retriever is lounging happily on the rug near the fireplace, looking relaxed and content. Warm, inviting afternoon golden light streaming through windows with cream linen curtains. Photorealistic interior design photography, wide angle lens, warm color temperature.</div>
+                <div class="prompt-text prompt-display" data-concept-id="1">Redesign this living room in a warm mid-century modern style. The room has the same layout and architecture - dark hardwood floors, marble fireplace with wood mantel, bay windows with crown molding, and a large bookshelf wall on the left. Replace the gray sofa with a rich camel-colored leather sofa with clean lines and tapered walnut legs. Swap the dark blue wingback chair for a classic Eames-style lounge chair and ottoman in walnut shell with black leather cushions. Replace the Moroccan shag rug with a vintage Persian rug in warm rust, gold, and cream tones. Update the bookshelf to beautiful open walnut wood shelving with brass bracket accents. Replace the chandelier with a large Nelson Bubble pendant lamp. Add warm brass accents - a brass arc floor lamp, brass picture frames. Keep the marble fireplace, hang a large colorful abstract painting in warm oranges and golds above the mantel. Add a larger round walnut coffee table with hairpin legs. A beautiful golden retriever is lounging happily on the rug near the fireplace, looking relaxed and content. Warm, inviting afternoon golden light streaming through windows with cream linen curtains. Photorealistic interior design photography, wide angle lens, warm color temperature.</div>
             </div>
         </div>
     </article>
@@ -270,15 +594,54 @@
     <article class="concept">
         <div class="concept-number">Concept 02</div>
         <h2>Scandinavian Minimalist</h2>
-        <img src="images/02_scandinavian_minimalist.jpg" alt="Scandinavian Minimalist redesign" data-index="2" onclick="openLightbox(2)">
+        <div class="image-container" data-concept-id="2">
+            <img src="images/02_scandinavian_minimalist.jpg" alt="Scandinavian Minimalist redesign" data-index="2" onclick="openLightbox(2)">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 48%; top: 8%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
+                    <div class="tooltip-title">The Single Globe</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A single matte white globe pendant &mdash; the antithesis of visual clutter. Nordic design teaches that one perfect light source outshines a dozen mediocre ones.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 14%; top: 44%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">Curated Restraint</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Restraint as a design principle: the shelves hold only what brings joy. Each object is chosen, not accumulated &mdash; a ceramic vase, a few beloved books, a living plant.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 30%; top: 55%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -60px;">
+                    <div class="tooltip-title">Wegner-Inspired Chair</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A Hans Wegner-inspired oak and boucl&eacute; chair brings warmth without weight &mdash; natural materials and organic curves soften the minimalist precision.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 28%;">
+                <div class="hotspot-tooltip" style="left: -300px; top: -20px;">
+                    <div class="tooltip-title">Art as Whisper</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A simple botanical line drawing replaces the bold abstract &mdash; art as whisper rather than shout, letting the architecture and natural light be the room's true focal point.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-2">Refine this concept</label>
+            <input type="text" id="guidance-2" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="2">
+            <button type="button" class="regenerate-btn" data-concept-id="2">Regenerate</button>
+        </div>
         <div class="concept-details">
             <div>
                 <h3>Design Goals</h3>
-                <p>Strip the room back to its essentials and let the beautiful architecture speak for itself. Inspired by Nordic design principles of light, simplicity, and function, this concept replaces all heavy furnishings with light oak wood pieces and clean-lined upholstery in soft neutral tones. The bookshelf becomes an exercise in restraint&mdash;curated to just a few meaningful objects. A single globe pendant replaces the chandelier. Cooper naps peacefully on the sofa, perfectly at home in this bright, calm sanctuary.</p>
+                <p class="design-goal" data-concept-id="2">Strip the room back to its essentials and let the beautiful architecture speak for itself. Inspired by Nordic design principles of light, simplicity, and function, this concept replaces all heavy furnishings with light oak wood pieces and clean-lined upholstery in soft neutral tones. The bookshelf becomes an exercise in restraint&mdash;curated to just a few meaningful objects. A single globe pendant replaces the chandelier. Cooper naps peacefully on the sofa, perfectly at home in this bright, calm sanctuary.</p>
             </div>
             <div>
                 <h3>Prompt Used</h3>
-                <div class="prompt-text">Redesign this living room in a clean Scandinavian minimalist style, keeping the same room architecture and layout - the arched doorway on the left, bay windows on the right, fireplace centered on the back wall. Replace the gray sofa with a lighter warm-gray linen sofa with slim Scandinavian wooden legs. Replace the wingback chair with a light natural oak and white boucle lounge chair in a Hans Wegner style. Swap the Moroccan shag rug for a simple flat-weave rug in soft cream with subtle pale gray geometric lines. Replace the IKEA cube bookshelf with a sleek open light oak bookshelf with minimal curated objects - a few books, a white ceramic vase, a small plant. Replace the chandelier with a single large white matte globe pendant light. Add a round light oak coffee table. Keep the white walls bright and clean. Keep the marble fireplace, replace the art with a simple large botanical line drawing in a thin black frame. Add a few carefully placed green plants - a monstera in a white ceramic pot, a trailing plant on the shelf. Sheer white linen curtains letting in maximum light. A golden retriever is curled up comfortably on the sofa, napping peacefully. The room should feel bright, airy, calm, and intentionally minimal. Photorealistic interior design photography, wide angle lens, bright natural daylight, cool Nordic light.</div>
+                <div class="prompt-text prompt-display" data-concept-id="2">Redesign this living room in a clean Scandinavian minimalist style, keeping the same room architecture and layout - the arched doorway on the left, bay windows on the right, fireplace centered on the back wall. Replace the gray sofa with a lighter warm-gray linen sofa with slim Scandinavian wooden legs. Replace the wingback chair with a light natural oak and white boucle lounge chair in a Hans Wegner style. Swap the Moroccan shag rug for a simple flat-weave rug in soft cream with subtle pale gray geometric lines. Replace the IKEA cube bookshelf with a sleek open light oak bookshelf with minimal curated objects - a few books, a white ceramic vase, a small plant. Replace the chandelier with a single large white matte globe pendant light. Add a round light oak coffee table. Keep the white walls bright and clean. Keep the marble fireplace, replace the art with a simple large botanical line drawing in a thin black frame. Add a few carefully placed green plants - a monstera in a white ceramic pot, a trailing plant on the shelf. Sheer white linen curtains letting in maximum light. A golden retriever is curled up comfortably on the sofa, napping peacefully. The room should feel bright, airy, calm, and intentionally minimal. Photorealistic interior design photography, wide angle lens, bright natural daylight, cool Nordic light.</div>
             </div>
         </div>
     </article>
@@ -286,15 +649,54 @@
     <article class="concept">
         <div class="concept-number">Concept 03</div>
         <h2>Moody Library Lounge</h2>
-        <img src="images/03_moody_library.jpg" alt="Moody Library Lounge redesign" data-index="3" onclick="openLightbox(3)">
+        <div class="image-container" data-concept-id="3">
+            <img src="images/03_moody_library.jpg" alt="Moody Library Lounge redesign" data-index="3" onclick="openLightbox(3)">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 78%; top: 35%;">
+                <div class="hotspot-tooltip" style="left: -300px; top: -20px;">
+                    <div class="tooltip-title">The Navy Cocoon</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Deep navy walls create an enveloping cocoon of color &mdash; the room no longer fights for brightness but embraces the drama of shadow and depth.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 58%; top: 58%;">
+                <div class="hotspot-tooltip" style="left: -300px; top: -40px;">
+                    <div class="tooltip-title">Velvet Chesterfield</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">An emerald velvet Chesterfield brings Victorian gravitas &mdash; its deep button tufting and rolled arms demand that you sit, stay, and linger over a book.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 48%; top: 10%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
+                    <div class="tooltip-title">Brass &amp; Edison</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Warm Edison bulbs in vintage brass cast pools of golden light &mdash; the room is designed for evening, when the world quiets and the fire glows.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 14%; top: 40%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">The Living Library</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Floor-to-ceiling shelving painted to match the walls creates an immersive library &mdash; leather-bound volumes, brass objects, and antique globes tell stories before you open a single page.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-3">Refine this concept</label>
+            <input type="text" id="guidance-3" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="3">
+            <button type="button" class="regenerate-btn" data-concept-id="3">Regenerate</button>
+        </div>
         <div class="concept-details">
             <div>
                 <h3>Design Goals</h3>
-                <p>Lean hard into the room&rsquo;s existing bookshelf wall and fireplace to create a dramatic, enveloping library atmosphere. Deep navy walls and matching built-in shelving filled with leather-bound books create an immersive cocoon of color. An emerald green velvet Chesterfield sofa and burgundy armchair bring rich jewel tones, while brass accents&mdash;chandelier, sconces, side tables&mdash;add warmth and glamour. Cooper sits regally by the fireplace, bathed in warm light, completing the ultimate evening retreat for reading, conversation, or a whiskey by the fire.</p>
+                <p class="design-goal" data-concept-id="3">Lean hard into the room&rsquo;s existing bookshelf wall and fireplace to create a dramatic, enveloping library atmosphere. Deep navy walls and matching built-in shelving filled with leather-bound books create an immersive cocoon of color. An emerald green velvet Chesterfield sofa and burgundy armchair bring rich jewel tones, while brass accents&mdash;chandelier, sconces, side tables&mdash;add warmth and glamour. Cooper sits regally by the fireplace, bathed in warm light, completing the ultimate evening retreat for reading, conversation, or a whiskey by the fire.</p>
             </div>
             <div>
                 <h3>Prompt Used</h3>
-                <div class="prompt-text">Redesign this living room as a dramatic, moody library lounge, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace. Paint all walls a deep rich navy blue. Keep and expand the built-in bookshelves but paint them to match the dark navy walls, filled with leather-bound books, antique globes, and decorative brass objects. Replace the sofa with a deep emerald green velvet Chesterfield sofa with tufted buttons and rolled arms. Replace the wingback chair with a rich burgundy velvet armchair with brass nail-head trim. Add dark walnut and brass side tables. Replace the rug with a rich dark antique Persian rug in deep reds, navy, and gold. Replace the chandelier with a dramatic vintage brass and glass chandelier with warm Edison bulbs. Add brass wall sconces flanking the fireplace. Keep the marble fireplace surround, add a large moody oil landscape painting in an ornate gilt frame above it. Thick dark navy velvet curtains on the windows, partially drawn. Warm dramatic evening lighting with pools of warm golden light from table lamps. A golden retriever is sitting regally next to the fireplace, bathed in the warm glow of the fire, looking distinguished. Warm dramatic evening lighting with pools of warm golden light from table lamps. A crystal whiskey decanter on the side table. Photorealistic interior design photography, warm dramatic lighting, shot on medium format camera.</div>
+                <div class="prompt-text prompt-display" data-concept-id="3">Redesign this living room as a dramatic, moody library lounge, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace. Paint all walls a deep rich navy blue. Keep and expand the built-in bookshelves but paint them to match the dark navy walls, filled with leather-bound books, antique globes, and decorative brass objects. Replace the sofa with a deep emerald green velvet Chesterfield sofa with tufted buttons and rolled arms. Replace the wingback chair with a rich burgundy velvet armchair with brass nail-head trim. Add dark walnut and brass side tables. Replace the rug with a rich dark antique Persian rug in deep reds, navy, and gold. Replace the chandelier with a dramatic vintage brass and glass chandelier with warm Edison bulbs. Add brass wall sconces flanking the fireplace. Keep the marble fireplace surround, add a large moody oil landscape painting in an ornate gilt frame above it. Thick dark navy velvet curtains on the windows, partially drawn. A golden retriever is sitting regally next to the fireplace, bathed in the warm glow of the fire, looking distinguished. Warm dramatic evening lighting with pools of warm golden light from table lamps. A crystal whiskey decanter on the side table. Photorealistic interior design photography, warm dramatic lighting, shot on medium format camera.</div>
             </div>
         </div>
     </article>
@@ -302,23 +704,250 @@
     <article class="concept">
         <div class="concept-number">Concept 04</div>
         <h2>California Bohemian</h2>
-        <img src="images/04_california_bohemian.jpg" alt="California Bohemian redesign" data-index="4" onclick="openLightbox(4)">
+        <div class="image-container" data-concept-id="4">
+            <img src="images/04_california_bohemian.jpg" alt="California Bohemian redesign" data-index="4" onclick="openLightbox(4)">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 48%; top: 8%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
+                    <div class="tooltip-title">Woven Rattan Light</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A woven rattan pendant casts dappled light patterns across the room &mdash; handcrafted, imperfect, alive. It sets the tone for a space where nothing feels manufactured.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 25%; top: 50%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -40px;">
+                    <div class="tooltip-title">The Peacock Chair</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">The rattan peacock chair is both sculpture and sanctuary &mdash; draped with sheepskin, it invites long afternoons of reading in dappled California light.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 68%;">
+                <div class="hotspot-tooltip" style="left: -300px; top: -80px;">
+                    <div class="tooltip-title">Live-Edge Slab</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A live-edge wood slab on iron legs brings the outdoors in &mdash; each knot and grain line is a reminder that nature is the original designer.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 10%; top: 35%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">Living Green</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">A lush constellation of fiddle leaf figs, trailing pothos, and snake plants transforms the room into a living ecosystem &mdash; the green is not decoration, it is atmosphere.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-4">Refine this concept</label>
+            <input type="text" id="guidance-4" placeholder="e.g. Add more plants, use darker wood tones…" data-concept-id="4">
+            <button type="button" class="regenerate-btn" data-concept-id="4">Regenerate</button>
+        </div>
         <div class="concept-details">
             <div>
                 <h3>Design Goals</h3>
-                <p>Bring the relaxed, sun-drenched energy of California indoor-outdoor living into the space. Natural and organic materials take center stage&mdash;rattan, jute, live-edge wood, woven textiles, and clay. The room becomes a botanical sanctuary with lush indoor plants throughout. Earth tones of terracotta, amber, olive, and cream replace the current cool palette. Cooper stretches out in a sunbeam on the jute rug, perfectly embodying the relaxed California vibe. A rattan peacock chair and woven pendant light add sculptural interest, while layered rugs and oversized linen cushions create an inviting, lived-in comfort.</p>
+                <p class="design-goal" data-concept-id="4">Bring the relaxed, sun-drenched energy of California indoor-outdoor living into the space. Natural and organic materials take center stage&mdash;rattan, jute, live-edge wood, woven textiles, and clay. The room becomes a botanical sanctuary with lush indoor plants throughout. Earth tones of terracotta, amber, olive, and cream replace the current cool palette. Cooper stretches out in a sunbeam on the jute rug, perfectly embodying the relaxed California vibe. A rattan peacock chair and woven pendant light add sculptural interest, while layered rugs and oversized linen cushions create an inviting, lived-in comfort.</p>
             </div>
             <div>
                 <h3>Prompt Used</h3>
-                <div class="prompt-text">Redesign this living room in a California bohemian organic modern style, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace with marble surround and wood mantel. Replace the gray sofa with a deep cream off-white linen sofa with oversized cushions and a relaxed lived-in look, draped with a terracotta-colored woven throw blanket. Replace the wingback chair with a large natural rattan peacock chair with a white sheepskin throw. Swap the Moroccan rug for a large natural jute rug layered with a smaller vintage Turkish kilim in warm earth tones - terracotta, amber, olive. Replace the IKEA bookshelf with open rattan and light wood shelving filled with ceramics, trailing pothos plants, woven baskets, and artisan pottery. Add many lush indoor plants throughout - a large fiddle leaf fig tree in a woven basket planter in the corner, hanging trailing plants, potted snake plants, a cluster of succulents on the coffee table. Replace the coffee table with a live-edge wood slab coffee table on a black iron base. Replace the chandelier with a large woven rattan pendant light. Keep the fireplace, place dried pampas grass arrangement in a clay vase on the mantel. A golden retriever is lying stretched out on the jute rug in a sunbeam, looking happy and relaxed. Warm terracotta and mustard throw pillows. Woven wall hanging on one wall. Bright airy natural California sunlight streaming in. Photorealistic interior design photography, warm golden natural light, wide angle lens.</div>
+                <div class="prompt-text prompt-display" data-concept-id="4">Redesign this living room in a California bohemian organic modern style, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace with marble surround and wood mantel. Replace the gray sofa with a deep cream off-white linen sofa with oversized cushions and a relaxed lived-in look, draped with a terracotta-colored woven throw blanket. Replace the wingback chair with a large natural rattan peacock chair with a white sheepskin throw. Swap the Moroccan rug for a large natural jute rug layered with a smaller vintage Turkish kilim in warm earth tones - terracotta, amber, olive. Replace the IKEA bookshelf with open rattan and light wood shelving filled with ceramics, trailing pothos plants, woven baskets, and artisan pottery. Add many lush indoor plants throughout - a large fiddle leaf fig tree in a woven basket planter in the corner, hanging trailing plants, potted snake plants, a cluster of succulents on the coffee table. Replace the coffee table with a live-edge wood slab coffee table on a black iron base. Replace the chandelier with a large woven rattan pendant light. Keep the fireplace, place dried pampas grass arrangement in a clay vase on the mantel. A golden retriever is lying stretched out on the jute rug in a sunbeam, looking happy and relaxed. Warm terracotta and mustard throw pillows. Woven wall hanging on one wall. Bright airy natural California sunlight streaming in. Photorealistic interior design photography, warm golden natural light, wide angle lens.</div>
             </div>
         </div>
     </article>
 
 </section>
+</div>
+
+<div id="tab-layout" class="tab-panel">
+<section class="original-section">
+    <h2>Current Room</h2>
+    <img src="images/original_living_room.jpg" alt="Current living room" data-index="0" onclick="openLightbox(0)">
+</section>
+
+<div class="divider"></div>
+
+<p class="hover-hint">Layout-focused concepts: furniture placement and proportion to optimize the space</p>
+
+<section class="concepts">
+
+    <article class="concept">
+        <div class="concept-number">Layout 01</div>
+        <h2>Conversation Circle</h2>
+        <div class="image-container" data-concept-id="5">
+            <img src="images/layout_01_conversation.jpg" alt="Conversation Circle layout" data-index="5" onclick="openLightbox(5)" onerror="this.src='images/original_living_room.jpg'">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 55%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: -60px;">
+                    <div class="tooltip-title">4–8 Foot Rule</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Seating arranged within optimal conversation distance &mdash; close enough for natural dialogue, far enough to breathe. The fireplace anchors the circle.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 30%; top: 35%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">Furniture Pulled In</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Sofa and chairs pulled away from walls to create an intimate grouping &mdash; the room feels larger when furniture defines the space instead of hugging the perimeter.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-5">Refine this concept</label>
+            <input type="text" id="guidance-5" placeholder="e.g. Adjust chair angle, add side table…" data-concept-id="5">
+            <button type="button" class="regenerate-btn" data-concept-id="5">Regenerate</button>
+        </div>
+        <div class="concept-details">
+            <div>
+                <h3>Layout Goals</h3>
+                <p class="design-goal" data-concept-id="5">Optimize for conversation. Pull the sofa and chairs away from the walls to create a 4–8 foot conversation distance around the fireplace as focal point. Same gray sofa and neutral palette—only the arrangement changes. Furniture defines the room instead of lining the perimeter.</p>
+            </div>
+            <div>
+                <h3>Prompt Used</h3>
+                <div class="prompt-text prompt-display" data-concept-id="5">Redesign this living room with OPTIMIZED LAYOUT only—keep the same vibe, colors, and general aesthetic (gray sofa, neutral tones, warm and inviting). Focus purely on furniture placement and proportion. Pull the sofa away from the wall to create a conversation circle around the fireplace. Position two chairs to face the sofa within 4-8 feet for optimal conversation distance. Keep the same room architecture - dark hardwood floors, marble fireplace with wood mantel, bay windows, bookshelf wall. Same gray sofa, same neutral rug, same general furniture style. Only change: where things sit and how they relate. Coffee table centered in the seating group, 18 inches from sofa. Side tables flanking the sofa. Clear 36-inch pathways. Photorealistic interior design photography, wide angle lens.</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="concept">
+        <div class="concept-number">Layout 02</div>
+        <h2>Proportion &amp; Scale</h2>
+        <div class="image-container" data-concept-id="6">
+            <img src="images/layout_02_proportion.jpg" alt="Proportion and Scale layout" data-index="6" onclick="openLightbox(6)" onerror="this.src='images/original_living_room.jpg'">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 45%; top: 65%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: -80px;">
+                    <div class="tooltip-title">Sofa-to-Wall Ratio</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Sofa sized to 60–75% of the wall it faces &mdash; the room feels balanced when the largest piece has proportional presence without overwhelming.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 45%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: -20px;">
+                    <div class="tooltip-title">Coffee Table Proportion</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Coffee table at 50–67% of sofa length, 1–2 inches below seat height &mdash; reachable without stretching, proportional to the seating.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 82%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: -170px;">
+                    <div class="tooltip-title">Rug Anchors the Group</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Rug large enough that all front furniture legs sit on it &mdash; the seating group reads as one intentional zone, not floating pieces.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-6">Refine this concept</label>
+            <input type="text" id="guidance-6" placeholder="e.g. Larger rug, different coffee table shape…" data-concept-id="6">
+            <button type="button" class="regenerate-btn" data-concept-id="6">Regenerate</button>
+        </div>
+        <div class="concept-details">
+            <div>
+                <h3>Layout Goals</h3>
+                <p class="design-goal" data-concept-id="6">Right-size every piece. Sofa at 60–75% of wall length. Coffee table at 50–67% of sofa length, 1–2" below seat height. Rug large enough that all front legs of the seating group sit on it. Same aesthetic—gray sofa, neutral palette—but furniture scaled to the room's proportions.</p>
+            </div>
+            <div>
+                <h3>Prompt Used</h3>
+                <div class="prompt-text prompt-display" data-concept-id="6">Redesign this living room with OPTIMIZED PROPORTION AND SCALE only—keep the same vibe and colors (gray sofa, neutral tones). Focus on furniture sizing. Sofa sized to 60-75% of the wall it faces. Coffee table 50-67% of sofa length, 1-2 inches below seat height. Area rug large enough that all front legs of sofa and chairs sit on it—never just the coffee table. Same room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa, neutral rug, same style. Only change: proportion and scale of furniture. Side tables within 2 inches of sofa arm height. Photorealistic interior design photography, wide angle lens.</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="concept">
+        <div class="concept-number">Layout 03</div>
+        <h2>Two-Zone Layout</h2>
+        <div class="image-container" data-concept-id="7">
+            <img src="images/layout_03_two_zones.jpg" alt="Two-Zone layout" data-index="7" onclick="openLightbox(7)" onerror="this.src='images/original_living_room.jpg'">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 25%; top: 40%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
+                    <div class="tooltip-title">Zone A: Conversation</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Primary seating group around the fireplace &mdash; sofa, chairs, coffee table on one rug defining the main gathering space.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 75%; top: 55%;">
+                <div class="hotspot-tooltip" style="left: -280px; top: -20px;">
+                    <div class="tooltip-title">Zone B: Reading Nook</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Secondary zone by the bay window &mdash; a chair, small side table, lamp. Its own rug creates a distinct "room within a room."</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-7">Refine this concept</label>
+            <input type="text" id="guidance-7" placeholder="e.g. Different zone divider, add desk…" data-concept-id="7">
+            <button type="button" class="regenerate-btn" data-concept-id="7">Regenerate</button>
+        </div>
+        <div class="concept-details">
+            <div>
+                <h3>Layout Goals</h3>
+                <p class="design-goal" data-concept-id="7">Create two functional zones. Zone A: main conversation group (sofa, chairs, coffee table) around the fireplace on one rug. Zone B: reading nook by the bay window—chair, side table, lamp—on a second rug. Same aesthetic. Use rugs and furniture arrangement to define zones without walls.</p>
+            </div>
+            <div>
+                <h3>Prompt Used</h3>
+                <div class="prompt-text prompt-display" data-concept-id="7">Redesign this living room with a TWO-ZONE LAYOUT—keep the same vibe and colors (gray sofa, neutral tones). Zone A: main conversation group—sofa, two chairs, coffee table—arranged around the fireplace, all on one large area rug. Zone B: reading nook by the bay window—single chair, small side table, floor lamp—on a second smaller rug. Same room architecture: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa and furniture style. Use furniture arrangement and rugs to define zones. Back of sofa can act as soft divider. Photorealistic interior design photography, wide angle lens.</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="concept">
+        <div class="concept-number">Layout 04</div>
+        <h2>Traffic Flow</h2>
+        <div class="image-container" data-concept-id="8">
+            <img src="images/layout_04_traffic_flow.jpg" alt="Traffic Flow layout" data-index="8" onclick="openLightbox(8)" onerror="this.src='images/original_living_room.jpg'">
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
+                <span class="spinner-text">Generating with Nano Banana Pro…</span>
+            </div>
+            <div class="hotspot" style="left: 15%; top: 50%;">
+                <div class="hotspot-tooltip" style="left: 24px; top: -40px;">
+                    <div class="tooltip-title">36-Inch Pathways</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Primary pathways from entry to living area kept clear &mdash; no one should weave between furniture to cross the room.</div>
+                </div>
+            </div>
+            <div class="hotspot" style="left: 50%; top: 30%;">
+                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
+                    <div class="tooltip-title">Media Console Placement</div>
+                    <div class="tooltip-line"></div>
+                    <div class="tooltip-text">Console positioned so it doesn't block flow to fireplace or bay window &mdash; furniture arranged to create natural circulation routes.</div>
+                </div>
+            </div>
+        </div>
+        <div class="regenerate-section">
+            <label for="guidance-8">Refine this concept</label>
+            <input type="text" id="guidance-8" placeholder="e.g. Widen pathway, adjust console…" data-concept-id="8">
+            <button type="button" class="regenerate-btn" data-concept-id="8">Regenerate</button>
+        </div>
+        <div class="concept-details">
+            <div>
+                <h3>Layout Goals</h3>
+                <p class="design-goal" data-concept-id="8">Optimize circulation. Clear 36-inch primary pathways from arched entry to main living area. Secondary paths (24-inch minimum) between coffee table and fireplace. Media console placed so it doesn't block flow. Furniture arranged to create natural circulation—no weaving between pieces. Same aesthetic.</p>
+            </div>
+            <div>
+                <h3>Prompt Used</h3>
+                <div class="prompt-text prompt-display" data-concept-id="8">Redesign this living room with OPTIMIZED TRAFFIC FLOW—keep the same vibe and colors (gray sofa, neutral tones). Focus on circulation. Clear 36-inch primary pathway from the arched doorway to the living area. Secondary paths at least 24 inches between seating and fireplace. Media console or bookshelf positioned to avoid blocking flow to bay window or fireplace. Furniture arranged so people can move naturally through the room without weaving. Same room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa, neutral rug, same style. Only change: furniture placement for better flow. Photorealistic interior design photography, wide angle lens.</div>
+            </div>
+        </div>
+    </article>
+
+</section>
+</div>
+</div>
 
 <footer>
-    Images generated with Gemini 3 Pro Image via Nano Banana MCP &middot; February 2026
+    Images generated with Gemini 3 Pro Image via Nano Banana Pro MCP &middot; Regenerate with your own guidance below &middot; February 2026
 </footer>
 
 <!-- Lightbox -->
@@ -336,8 +965,47 @@
         { src: 'images/01_midcentury_modern.jpg', caption: 'Concept 01 — Mid-Century Modern Warmth' },
         { src: 'images/02_scandinavian_minimalist.jpg', caption: 'Concept 02 — Scandinavian Minimalist' },
         { src: 'images/03_moody_library.jpg', caption: 'Concept 03 — Moody Library Lounge' },
-        { src: 'images/04_california_bohemian.jpg', caption: 'Concept 04 — California Bohemian' }
+        { src: 'images/04_california_bohemian.jpg', caption: 'Concept 04 — California Bohemian' },
+        { src: 'images/layout_01_conversation.jpg', caption: 'Layout 01 — Conversation Circle' },
+        { src: 'images/layout_02_proportion.jpg', caption: 'Layout 02 — Proportion & Scale' },
+        { src: 'images/layout_03_two_zones.jpg', caption: 'Layout 03 — Two-Zone Layout' },
+        { src: 'images/layout_04_traffic_flow.jpg', caption: 'Layout 04 — Traffic Flow' }
     ];
+
+    const CONCEPT_DATA = {
+        1: {
+            designGoal: "Transform the room into a warm, sophisticated space inspired by the 1950s–60s design movement. The focus is on rich natural materials—walnut wood, camel leather, and brass—paired with warm earth-toned textiles. The iconic Eames lounge chair becomes the statement piece, while a Nelson Bubble pendant replaces the existing fixture. Open walnut shelving creates a more curated, gallery-like feel. The overall palette shifts from cool grays to warm golds, rusts, and cognacs.",
+            prompt: "Redesign this living room in a warm mid-century modern style. The room has the same layout and architecture - dark hardwood floors, marble fireplace with wood mantel, bay windows with crown molding, and a large bookshelf wall on the left. Replace the gray sofa with a rich camel-colored leather sofa with clean lines and tapered walnut legs. Swap the dark blue wingback chair for a classic Eames-style lounge chair and ottoman in walnut shell with black leather cushions. Replace the Moroccan shag rug with a vintage Persian rug in warm rust, gold, and cream tones. Update the bookshelf to beautiful open walnut wood shelving with brass bracket accents. Replace the chandelier with a large Nelson Bubble pendant lamp. Add warm brass accents - a brass arc floor lamp, brass picture frames. Keep the marble fireplace, hang a large colorful abstract painting in warm oranges and golds above the mantel. Add a larger round walnut coffee table with hairpin legs. Warm, inviting afternoon golden light streaming through windows with cream linen curtains. Photorealistic interior design photography, wide angle lens, warm color temperature."
+        },
+        2: {
+            designGoal: "Strip the room back to its essentials and let the beautiful architecture speak for itself. Inspired by Nordic design principles of light, simplicity, and function, this concept replaces all heavy furnishings with light oak wood pieces and clean-lined upholstery in soft neutral tones. The bookshelf becomes an exercise in restraint—curated to just a few meaningful objects. A single globe pendant replaces the chandelier.",
+            prompt: "Redesign this living room in a clean Scandinavian minimalist style, keeping the same room architecture and layout - the arched doorway on the left, bay windows on the right, fireplace centered on the back wall. Replace the gray sofa with a lighter warm-gray linen sofa with slim Scandinavian wooden legs. Replace the wingback chair with a light natural oak and white boucle lounge chair in a Hans Wegner style. Swap the Moroccan shag rug for a simple flat-weave rug in soft cream with subtle pale gray geometric lines. Replace the IKEA cube bookshelf with a sleek open light oak bookshelf with minimal curated objects - a few books, a white ceramic vase, a small plant. Replace the chandelier with a single large white matte globe pendant light. Add a round light oak coffee table. Keep the white walls bright and clean. Keep the marble fireplace, replace the art with a simple large botanical line drawing in a thin black frame. Add a few carefully placed green plants - a monstera in a white ceramic pot, a trailing plant on the shelf. Sheer white linen curtains letting in maximum light. The room should feel bright, airy, calm, and intentionally minimal. Photorealistic interior design photography, wide angle lens, bright natural daylight, cool Nordic light."
+        },
+        3: {
+            designGoal: "Lean hard into the room's existing bookshelf wall and fireplace to create a dramatic, enveloping library atmosphere. Deep navy walls and matching built-in shelving filled with leather-bound books create an immersive cocoon of color. An emerald green velvet Chesterfield sofa and burgundy armchair bring rich jewel tones, while brass accents—chandelier, sconces, side tables—add warmth and glamour. The ultimate evening retreat for reading, conversation, or a whiskey by the fire.",
+            prompt: "Redesign this living room as a dramatic, moody library lounge, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace. Paint all walls a deep rich navy blue. Keep and expand the built-in bookshelves but paint them to match the dark navy walls, filled with leather-bound books, antique globes, and decorative brass objects. Replace the sofa with a deep emerald green velvet Chesterfield sofa with tufted buttons and rolled arms. Replace the wingback chair with a rich burgundy velvet armchair with brass nail-head trim. Add dark walnut and brass side tables. Replace the rug with a rich dark antique Persian rug in deep reds, navy, and gold. Replace the chandelier with a dramatic vintage brass and glass chandelier with warm Edison bulbs. Add brass wall sconces flanking the fireplace. Keep the marble fireplace surround, add a large moody oil landscape painting in an ornate gilt frame above it. Thick dark navy velvet curtains on the windows, partially drawn. Warm dramatic evening lighting with pools of warm golden light from table lamps. A crystal whiskey decanter on the side table. Photorealistic interior design photography, warm dramatic lighting, shot on medium format camera."
+        },
+        4: {
+            designGoal: "Bring the relaxed, sun-drenched energy of California indoor-outdoor living into the space. Natural and organic materials take center stage—rattan, jute, live-edge wood, woven textiles, and clay. The room becomes a botanical sanctuary with lush indoor plants throughout. Earth tones of terracotta, amber, olive, and cream replace the current cool palette. A rattan peacock chair and woven pendant light add sculptural interest, while layered rugs and oversized linen cushions create an inviting, lived-in comfort.",
+            prompt: "Redesign this living room in a California bohemian organic modern style, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace with marble surround and wood mantel. Replace the gray sofa with a deep cream off-white linen sofa with oversized cushions and a relaxed lived-in look, draped with a terracotta-colored woven throw blanket. Replace the wingback chair with a large natural rattan peacock chair with a white sheepskin throw. Swap the Moroccan rug for a large natural jute rug layered with a smaller vintage Turkish kilim in warm earth tones - terracotta, amber, olive. Replace the IKEA bookshelf with open rattan and light wood shelving filled with ceramics, trailing pothos plants, woven baskets, and artisan pottery. Add many lush indoor plants throughout - a large fiddle leaf fig tree in a woven basket planter in the corner, hanging trailing plants, potted snake plants, a cluster of succulents on the coffee table. Replace the coffee table with a live-edge wood slab coffee table on a black iron base. Replace the chandelier with a large woven rattan pendant light. Keep the fireplace, place dried pampas grass arrangement in a clay vase on the mantel. Warm terracotta and mustard throw pillows. Woven wall hanging on one wall. Bright airy natural California sunlight streaming in. Photorealistic interior design photography, warm golden natural light, wide angle lens."
+        },
+        5: {
+            designGoal: "Optimize for conversation. Pull the sofa and chairs away from the walls to create a 4–8 foot conversation distance around the fireplace as focal point. Same gray sofa and neutral palette—only the arrangement changes. Furniture defines the room instead of lining the perimeter.",
+            prompt: "Redesign this living room with OPTIMIZED LAYOUT only—keep the same vibe, colors, and general aesthetic (gray sofa, neutral tones, warm and inviting). Focus purely on furniture placement and proportion. Pull the sofa away from the wall to create a conversation circle around the fireplace. Position two chairs to face the sofa within 4-8 feet for optimal conversation distance. Keep the same room architecture - dark hardwood floors, marble fireplace with wood mantel, bay windows, bookshelf wall. Same gray sofa, same neutral rug, same general furniture style. Only change: where things sit and how they relate. Coffee table centered in the seating group, 18 inches from sofa. Side tables flanking the sofa. Clear 36-inch pathways. Photorealistic interior design photography, wide angle lens."
+        },
+        6: {
+            designGoal: "Right-size every piece. Sofa at 60–75% of wall length. Coffee table at 50–67% of sofa length, 1–2\" below seat height. Rug large enough that all front legs of the seating group sit on it. Same aesthetic—gray sofa, neutral palette—but furniture scaled to the room's proportions.",
+            prompt: "Redesign this living room with OPTIMIZED PROPORTION AND SCALE only—keep the same vibe and colors (gray sofa, neutral tones). Focus on furniture sizing. Sofa sized to 60-75% of the wall it faces. Coffee table 50-67% of sofa length, 1-2 inches below seat height. Area rug large enough that all front legs of sofa and chairs sit on it—never just the coffee table. Same room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa, neutral rug, same style. Only change: proportion and scale of furniture. Side tables within 2 inches of sofa arm height. Photorealistic interior design photography, wide angle lens."
+        },
+        7: {
+            designGoal: "Create two functional zones. Zone A: main conversation group (sofa, chairs, coffee table) around the fireplace on one rug. Zone B: reading nook by the bay window—chair, side table, lamp—on a second rug. Same aesthetic. Use rugs and furniture arrangement to define zones without walls.",
+            prompt: "Redesign this living room with a TWO-ZONE LAYOUT—keep the same vibe and colors (gray sofa, neutral tones). Zone A: main conversation group—sofa, two chairs, coffee table—arranged around the fireplace, all on one large area rug. Zone B: reading nook by the bay window—single chair, small side table, floor lamp—on a second smaller rug. Same room architecture: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa and furniture style. Use furniture arrangement and rugs to define zones. Back of sofa can act as soft divider. Photorealistic interior design photography, wide angle lens."
+        },
+        8: {
+            designGoal: "Optimize circulation. Clear 36-inch primary pathways from arched entry to main living area. Secondary paths (24-inch minimum) between coffee table and fireplace. Media console placed so it doesn't block flow. Furniture arranged to create natural circulation—no weaving between pieces. Same aesthetic.",
+            prompt: "Redesign this living room with OPTIMIZED TRAFFIC FLOW—keep the same vibe and colors (gray sofa, neutral tones). Focus on circulation. Clear 36-inch primary pathway from the arched doorway to the living area. Secondary paths at least 24 inches between seating and fireplace. Media console or bookshelf positioned to avoid blocking flow to bay window or fireplace. Furniture arranged so people can move naturally through the room without weaving. Same room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Same gray sofa, neutral rug, same style. Only change: furniture placement for better flow. Photorealistic interior design photography, wide angle lens."
+        }
+    };
 
     let currentIndex = 0;
 
@@ -376,6 +1044,93 @@
         } else if (e.key === 'ArrowRight') {
             navLightbox(e, 1);
         }
+    });
+
+    // Prevent hotspot clicks from triggering lightbox
+    document.querySelectorAll('.hotspot').forEach(function(dot) {
+        dot.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Regenerate with Nano Banana Pro (Gemini Ultimate)
+    async function regenerateConcept(conceptId) {
+        const container = document.querySelector('.image-container[data-concept-id="' + conceptId + '"]');
+        const img = container.querySelector('img');
+        const input = document.getElementById('guidance-' + conceptId);
+        const btn = container.closest('.concept').querySelector('.regenerate-btn');
+        const designGoalEl = document.querySelector('.design-goal[data-concept-id="' + conceptId + '"]');
+        const promptEl = document.querySelector('.prompt-display[data-concept-id="' + conceptId + '"]');
+
+        const userGuidance = (input.value || '').trim();
+        const data = CONCEPT_DATA[conceptId];
+        if (!data) return;
+
+        const mergedPrompt = userGuidance
+            ? data.prompt + ' Additional modifications to incorporate: ' + userGuidance
+            : data.prompt;
+
+        const mergedDesignGoal = userGuidance
+            ? data.designGoal + ' Refinement: ' + userGuidance
+            : data.designGoal;
+
+        container.classList.add('loading');
+        btn.disabled = true;
+
+        try {
+            const apiBase = window.location.origin;
+            const res = await fetch(apiBase + '/api/regenerate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ conceptId, prompt: mergedPrompt })
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({ error: res.statusText }));
+                throw new Error(err.error || 'Regeneration failed');
+            }
+
+            const { image, mimeType } = await res.json();
+            const dataUrl = 'data:' + (mimeType || 'image/png') + ';base64,' + image;
+
+            img.src = dataUrl;
+            images[conceptId] = { ...images[conceptId], src: dataUrl };
+            designGoalEl.textContent = mergedDesignGoal;
+            promptEl.textContent = mergedPrompt;
+            input.value = '';
+        } catch (err) {
+            alert('Could not regenerate: ' + (err.message || 'Unknown error'));
+        } finally {
+            container.classList.remove('loading');
+            btn.disabled = false;
+        }
+    }
+
+    document.querySelectorAll('.regenerate-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const conceptId = parseInt(btn.dataset.conceptId, 10);
+            regenerateConcept(conceptId);
+        });
+    });
+
+    document.querySelectorAll('.regenerate-section input[type="text"]').forEach(function(input) {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const conceptId = parseInt(input.dataset.conceptId, 10);
+                regenerateConcept(conceptId);
+            }
+        });
+    });
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const tab = btn.dataset.tab;
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        });
     });
 </script>
 

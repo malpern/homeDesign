@@ -12,29 +12,30 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const IMAGES_DIR = join(ROOT, "images");
+const ORIGINAL_IMAGE = join(IMAGES_DIR, "original_living_room.jpg");
 
-// Layout concepts: VISUALLY DISTINCT arrangements. Same MCM vibe, different furniture + layout.
+// Image-to-image: pass original room as input so model edits it, producing distinct layouts.
 // Each prompt forces a different composition so images don't look identical.
 const LAYOUT_PROMPTS = [
   {
     file: "layout_01_conversation.jpg",
     prompt:
-      "Interior photo of a mid-century modern living room, shot from the arched doorway looking in. Sofa DIRECTLY FACES the fireplace—a camel leather three-seater with no furniture behind it, floating in the room. Two cognac leather Eames lounge chairs flank the sofa at 90-degree angles, forming a U-shape. One LARGE ROUND walnut coffee table in the center for board games. All furniture pulled away from walls onto a warm rust-and-gold Persian rug. Dark hardwood, marble fireplace, bay windows left, bookshelf right. Nelson Bubble pendant. Walnut side tables. MCM: tapered legs, brass. Warm afternoon light. Photorealistic, wide angle.",
+      "Transform this living room into a CONVERSATION CIRCLE layout. REPLACE all furniture. New: camel leather sofa facing fireplace (floating, not against wall), two COGNAC LEATHER Eames lounge chairs at 90 degrees forming U-shape, large ROUND walnut coffee table. Warm rust Persian rug. Keep: dark hardwood, marble fireplace, bay windows, bookshelf. Add Nelson Bubble pendant. Mid-century modern. Photorealistic.",
   },
   {
     file: "layout_02_proportion.jpg",
     prompt:
-      "Interior photo of a mid-century modern living room, shot from the bay window corner. An L-SHAPED SECTIONAL in oat boucle—the long side faces the fireplace, the chaise extends toward the camera into the room. A cognac leather armchair sits at the OPEN END of the L, near the chaise. One large RECTANGULAR walnut coffee table (not round) between the sectional and chair. Sectional wraps the corner—clearly an L-shape. Cream and rust vintage rug. Dark hardwood, marble fireplace, bay windows behind camera, bookshelf on left wall. Brass arc floor lamp. MCM aesthetic. Warm light. Photorealistic, wide angle.",
+      "Transform this living room to L-SHAPED SECTIONAL layout. REPLACE all furniture. New: L-shaped sectional in oat boucle (chaise extends into room), COGNAC LEATHER armchair at open end of L, large RECTANGULAR walnut coffee table. Cream and rust rug. Keep: dark hardwood, marble fireplace, bay windows, bookshelf. Add brass arc lamp. Mid-century modern. Photorealistic.",
   },
   {
     file: "layout_03_two_zones.jpg",
     prompt:
-      "Interior photo of a mid-century modern living room with TWO CLEARLY SEPARATE ZONES. Left half: camel leather sofa and two cognac leather chairs around fireplace on a large rust Persian rug—main conversation area. Right half: BAY WINDOW READING NOOK—single cognac leather Eames chair, small walnut side table with lamp and book, floor lamp, on a SECOND smaller cream rug. The sofa's BACK faces the bay window, acting as a divider. Two distinct zones visible in one frame. Dark hardwood, marble fireplace, bookshelf. MCM furniture. Afternoon light, lamp on in reading nook. Photorealistic, wide angle.",
+      "Transform this living room into TWO ZONES. REPLACE all furniture. Zone 1: camel leather sofa and two COGNAC LEATHER chairs on rust rug by fireplace. Zone 2: single COGNAC LEATHER Eames reading chair, walnut side table, floor lamp on cream rug in bay window. Sofa back divides zones. Keep: dark hardwood, marble fireplace, bay windows, bookshelf. Mid-century modern. Photorealistic.",
   },
   {
     file: "layout_04_traffic_flow.jpg",
     prompt:
-      "Interior photo of a mid-century modern living room with ASYMMETRIC FLOATING FURNITURE. Sofa is NOT against a wall—it floats perpendicular to the fireplace with space behind it. A cognac leather club chair and two fabric accent chairs (oat or taupe) are scattered around a large rectangular walnut coffee table. Two leather ottomans as extra seating. Clear 36-inch pathway from arched entry. Furniture creates multiple seating clusters—some face fireplace, some face each other. Navy and cream kilim rug (different from rust Persian). Dark hardwood, marble fireplace, bay windows, bookshelf. MCM: walnut, brass, tapered legs. Open, airy layout. Photorealistic, wide angle.",
+      "Transform this living room to FLOATING ASYMMETRIC layout. REPLACE all furniture. New: camel leather sofa perpendicular to fireplace (NOT against wall), COGNAC LEATHER club chair, two oat fabric chairs, two leather ottomans, rectangular walnut table. Navy and cream kilim rug. Clear pathway from arched entry. Keep: dark hardwood, marble fireplace, bay windows, bookshelf. Mid-century modern. Photorealistic.",
   },
 ];
 
@@ -50,16 +51,35 @@ function loadEnv() {
   return process.env.GEMINI_API_KEY;
 }
 
+function loadOriginalImage() {
+  const buf = readFileSync(ORIGINAL_IMAGE);
+  return buf.toString("base64");
+}
+
 async function generateImage(prompt) {
   const apiKey = loadEnv();
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY not found. Set it in .env.local or environment.");
   }
 
-  // Nano Banana Pro (gemini-3-pro-image-preview) - highest quality image generation
+  const originalBase64 = loadOriginalImage();
+
+  // Image-to-image: pass original room first, then edit instructions
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`;
   const body = {
-    contents: [{ parts: [{ text: prompt }] }],
+    contents: [
+      {
+        parts: [
+          {
+            inlineData: {
+              mimeType: "image/jpeg",
+              data: originalBase64,
+            },
+          },
+          { text: prompt },
+        ],
+      },
+    ],
     generationConfig: {
       responseModalities: ["TEXT", "IMAGE"],
       imageConfig: { aspectRatio: "4:3", imageSize: "2K" },

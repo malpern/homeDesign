@@ -13,29 +13,28 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const IMAGES_DIR = join(ROOT, "images");
 
-// Layout concepts: different MCM furniture + arrangements. Seats 4+, supports socializing,
-// individual work, gaming. At least one layout with leather chair. Interior design skill: warm
-// American modernism, walnut/camel/cognac, tapered legs, texture contrast, 4-8ft conversation distance.
+// Layout concepts: VISUALLY DISTINCT arrangements. Same MCM vibe, different furniture + layout.
+// Each prompt forces a different composition so images don't look identical.
 const LAYOUT_PROMPTS = [
   {
     file: "layout_01_conversation.jpg",
     prompt:
-      "Interior design photo of a mid-century modern living room. Conversation circle layout: camel leather sofa and two cognac leather Eames-style lounge chairs arranged in a circle around the marble fireplace. Seats 4-6. Large round walnut coffee table centered for board games. Walnut side tables. Warm vintage Persian rug anchors the group. Room: dark hardwood, marble fireplace with wood mantel, bay windows, bookshelf wall. MCM aesthetic: clean lines, tapered legs, brass accents. Texture contrast: supple leather against polished marble, matte walnut. Nelson Bubble pendant. Warm afternoon light. Supports socializing and group games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
+      "Interior photo of a mid-century modern living room, shot from the arched doorway looking in. Sofa DIRECTLY FACES the fireplace—a camel leather three-seater with no furniture behind it, floating in the room. Two cognac leather Eames lounge chairs flank the sofa at 90-degree angles, forming a U-shape. One LARGE ROUND walnut coffee table in the center for board games. All furniture pulled away from walls onto a warm rust-and-gold Persian rug. Dark hardwood, marble fireplace, bay windows left, bookshelf right. Nelson Bubble pendant. Walnut side tables. MCM: tapered legs, brass. Warm afternoon light. Photorealistic, wide angle.",
   },
   {
     file: "layout_02_proportion.jpg",
     prompt:
-      "Interior design photo of a mid-century modern living room. L-shaped sectional in warm oat boucle or linen, plus a cognac leather armchair with walnut frame. Sectional faces fireplace; leather chair at the corner for flexible seating. Large rectangular walnut coffee table (game-sized) between seating. Seats 4+. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Sofa 60-75% of wall; coffee table 50-67% of sofa length. Area rug large enough for all front legs. MCM: tapered legs, brass arc lamp, walnut shelving. Supports socializing, individual reading, board games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
+      "Interior photo of a mid-century modern living room, shot from the bay window corner. An L-SHAPED SECTIONAL in oat boucle—the long side faces the fireplace, the chaise extends toward the camera into the room. A cognac leather armchair sits at the OPEN END of the L, near the chaise. One large RECTANGULAR walnut coffee table (not round) between the sectional and chair. Sectional wraps the corner—clearly an L-shape. Cream and rust vintage rug. Dark hardwood, marble fireplace, bay windows behind camera, bookshelf on left wall. Brass arc floor lamp. MCM aesthetic. Warm light. Photorealistic, wide angle.",
   },
   {
     file: "layout_03_two_zones.jpg",
     prompt:
-      "Interior design photo of a mid-century modern living room with two zones. Zone A: camel leather sofa and two cognac leather chairs around fireplace on one large rug—conversation and games. Zone B: single cognac leather reading chair by bay window with walnut side table (laptop/books), floor lamp—individual work nook on second smaller rug. Back of sofa as soft divider. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM furniture throughout: Eames-style, walnut, brass. Seats 4+ with space for solo work. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
+      "Interior photo of a mid-century modern living room with TWO CLEARLY SEPARATE ZONES. Left half: camel leather sofa and two cognac leather chairs around fireplace on a large rust Persian rug—main conversation area. Right half: BAY WINDOW READING NOOK—single cognac leather Eames chair, small walnut side table with lamp and book, floor lamp, on a SECOND smaller cream rug. The sofa's BACK faces the bay window, acting as a divider. Two distinct zones visible in one frame. Dark hardwood, marble fireplace, bookshelf. MCM furniture. Afternoon light, lamp on in reading nook. Photorealistic, wide angle.",
   },
   {
     file: "layout_04_traffic_flow.jpg",
     prompt:
-      "Interior design photo of a mid-century modern living room. Flexible seating: camel leather sofa, cognac leather club chair, two fabric accent chairs, ottomans. Furniture arranged for 36-inch pathways—clear flow from arched entry. Large walnut coffee table for games. Seats 4+ with mix of seating types. Supports socializing, individual work (chair with side table), gaming. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM: tapered legs, walnut, brass, warm neutrals. Vintage Persian rug. Natural circulation, no weaving. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
+      "Interior photo of a mid-century modern living room with ASYMMETRIC FLOATING FURNITURE. Sofa is NOT against a wall—it floats perpendicular to the fireplace with space behind it. A cognac leather club chair and two fabric accent chairs (oat or taupe) are scattered around a large rectangular walnut coffee table. Two leather ottomans as extra seating. Clear 36-inch pathway from arched entry. Furniture creates multiple seating clusters—some face fireplace, some face each other. Navy and cream kilim rug (different from rust Persian). Dark hardwood, marble fireplace, bay windows, bookshelf. MCM: walnut, brass, tapered legs. Open, airy layout. Photorealistic, wide angle.",
   },
 ];
 

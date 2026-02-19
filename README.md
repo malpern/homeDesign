@@ -4,7 +4,9 @@ Four distinct design directions for transforming a living room, generated with G
 
 ## Features
 
-- **Design concepts**: Mid-Century Modern, Scandinavian Minimalist, Moody Library Lounge, California Bohemian
+- **Design concepts** (`index.html`): Mid-Century Modern, Scandinavian Minimalist, Moody Library Lounge, California Bohemian
+- **Layout optimization** (`layout.html`): Four layout concepts (Conversation Circle, Sectional + Leather Chair, Two-Zone, Flexible Seating) with full page navigation
+- **Real tabs**: Design and Layout are separate pages—clicking a tab does a full page refresh
 - **Interactive hotspots**: Hover over images to discover key design decisions
 - **Regenerate**: Enter refinement guidance below any concept and regenerate with Gemini Nano Banana Pro
 

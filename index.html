@@ -368,6 +368,8 @@
             color: #666;
             cursor: pointer;
             transition: color 0.2s, background 0.2s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .tab-btn:hover {
@@ -519,12 +521,11 @@
 </header>
 
 <nav class="tab-nav">
-    <button type="button" class="tab-btn active" data-tab="design">Design Concepts</button>
-    <button type="button" class="tab-btn" data-tab="layout">Layout Optimization</button>
+    <a href="index.html" class="tab-btn active">Design Concepts</a>
+    <a href="layout.html" class="tab-btn">Layout Optimization</a>
 </nav>
 
 <div class="tab-content">
-<div id="tab-design" class="tab-panel active">
 <section class="original-section">
     <h2>Current Room</h2>
     <img src="images/original_living_room.jpg" alt="Current living room" data-index="0" onclick="openLightbox(0)">
@@ -759,194 +760,6 @@
 </section>
 </div>
 
-<div id="tab-layout" class="tab-panel">
-<section class="original-section">
-    <h2>Current Room</h2>
-    <img src="images/original_living_room.jpg" alt="Current living room" data-index="0" onclick="openLightbox(0)">
-</section>
-
-<div class="divider"></div>
-
-<p class="hover-hint">Different MCM furniture and layouts: seat 4+, support socializing, individual work, and gaming</p>
-<p class="hover-hint" style="font-size:0.85rem;color:#888;">If images look identical, try a hard refresh (Cmd+Shift+R or Ctrl+Shift+R) to clear cache.</p>
-
-<section class="concepts">
-
-    <article class="concept">
-        <div class="concept-number">Layout 01</div>
-        <h2>Conversation Circle</h2>
-        <div class="image-container" data-concept-id="5">
-            <img src="images/layout_01_conversation.jpg?v=2" alt="Conversation Circle layout" data-index="5" onclick="openLightbox(5)" onerror="this.src='images/original_living_room.jpg'">
-            <div class="spinner-overlay">
-                <div class="spinner"></div>
-                <span class="spinner-text">Generating with Nano Banana Pro…</span>
-            </div>
-            <div class="hotspot" style="left: 50%; top: 55%;">
-                <div class="hotspot-tooltip" style="left: -140px; top: -60px;">
-                    <div class="tooltip-title">Leather Chairs</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Cognac leather Eames-style chairs face the sofa within 4–8 feet—optimal conversation distance. Leather adds warmth and pairs with walnut.</div>
-                </div>
-            </div>
-            <div class="hotspot" style="left: 30%; top: 35%;">
-                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
-                    <div class="tooltip-title">Game-Ready Table</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Large round walnut coffee table centered for board games and drinks. Seats 4–6 around the fireplace.</div>
-                </div>
-            </div>
-        </div>
-        <div class="regenerate-section">
-            <label for="guidance-5">Refine this concept</label>
-            <input type="text" id="guidance-5" placeholder="e.g. Different leather color, add ottoman…" data-concept-id="5">
-            <button type="button" class="regenerate-btn" data-concept-id="5">Regenerate</button>
-        </div>
-        <div class="concept-details">
-            <div>
-                <h3>Layout Goals</h3>
-                <p class="design-goal" data-concept-id="5">Conversation circle with different MCM furniture: camel leather sofa, two cognac leather Eames-style chairs. Seats 4–6. Large coffee table for games. Fireplace as focal point. Supports socializing and group play.</p>
-            </div>
-            <div>
-                <h3>Prompt Used</h3>
-                <div class="prompt-text prompt-display" data-concept-id="5">Interior design photo of a mid-century modern living room. Conversation circle layout: camel leather sofa and two cognac leather Eames-style lounge chairs arranged in a circle around the marble fireplace. Seats 4-6. Large round walnut coffee table centered for board games. Walnut side tables. Warm vintage Persian rug anchors the group. Room: dark hardwood, marble fireplace with wood mantel, bay windows, bookshelf wall. MCM aesthetic: clean lines, tapered legs, brass accents. Texture contrast: supple leather against polished marble, matte walnut. Nelson Bubble pendant. Warm afternoon light. Supports socializing and group games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.</div>
-            </div>
-        </div>
-    </article>
-
-    <article class="concept">
-        <div class="concept-number">Layout 02</div>
-        <h2>Sectional + Leather Chair</h2>
-        <div class="image-container" data-concept-id="6">
-            <img src="images/layout_02_proportion.jpg?v=2" alt="Sectional and Leather Chair layout" data-index="6" onclick="openLightbox(6)" onerror="this.src='images/original_living_room.jpg'">
-            <div class="spinner-overlay">
-                <div class="spinner"></div>
-                <span class="spinner-text">Generating with Nano Banana Pro…</span>
-            </div>
-            <div class="hotspot" style="left: 45%; top: 65%;">
-                <div class="hotspot-tooltip" style="left: -140px; top: -80px;">
-                    <div class="tooltip-title">Cognac Leather Chair</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Walnut-framed cognac leather armchair at the corner. Flexible seating for reading or joining the group.</div>
-                </div>
-            </div>
-            <div class="hotspot" style="left: 50%; top: 45%;">
-                <div class="hotspot-tooltip" style="left: -140px; top: -20px;">
-                    <div class="tooltip-title">Game-Sized Table</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Large rectangular walnut coffee table for board games. Seats 4+ with sectional and leather chair.</div>
-                </div>
-            </div>
-            <div class="hotspot" style="left: 50%; top: 82%;">
-                <div class="hotspot-tooltip" style="left: -140px; top: -170px;">
-                    <div class="tooltip-title">L-Shaped Sectional</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Oat boucle or linen sectional faces fireplace. Supports socializing, individual work, and gaming.</div>
-                </div>
-            </div>
-        </div>
-        <div class="regenerate-section">
-            <label for="guidance-6">Refine this concept</label>
-            <input type="text" id="guidance-6" placeholder="e.g. Larger rug, different coffee table shape…" data-concept-id="6">
-            <button type="button" class="regenerate-btn" data-concept-id="6">Regenerate</button>
-        </div>
-        <div class="concept-details">
-            <div>
-                <h3>Layout Goals</h3>
-                <p class="design-goal" data-concept-id="6">L-shaped sectional in oat boucle plus cognac leather armchair. Game-sized coffee table. Seats 4+. Supports socializing, individual reading, and board games. MCM vibe throughout.</p>
-            </div>
-            <div>
-                <h3>Prompt Used</h3>
-                <div class="prompt-text prompt-display" data-concept-id="6">Interior design photo of a mid-century modern living room. L-shaped sectional in warm oat boucle or linen, plus a cognac leather armchair with walnut frame. Sectional faces fireplace; leather chair at the corner for flexible seating. Large rectangular walnut coffee table (game-sized) between seating. Seats 4+. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Sofa 60-75% of wall; coffee table 50-67% of sofa length. Area rug large enough for all front legs. MCM: tapered legs, brass arc lamp, walnut shelving. Supports socializing, individual reading, board games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.</div>
-            </div>
-        </div>
-    </article>
-
-    <article class="concept">
-        <div class="concept-number">Layout 03</div>
-        <h2>Two-Zone Layout</h2>
-        <div class="image-container" data-concept-id="7">
-            <img src="images/layout_03_two_zones.jpg?v=2" alt="Two-Zone layout" data-index="7" onclick="openLightbox(7)" onerror="this.src='images/original_living_room.jpg'">
-            <div class="spinner-overlay">
-                <div class="spinner"></div>
-                <span class="spinner-text">Generating with Nano Banana Pro…</span>
-            </div>
-            <div class="hotspot" style="left: 25%; top: 40%;">
-                <div class="hotspot-tooltip" style="left: 24px; top: -20px;">
-                    <div class="tooltip-title">Zone A: Conversation</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Camel leather sofa and cognac leather chairs around fireplace. Coffee table for games. Main gathering space.</div>
-                </div>
-            </div>
-            <div class="hotspot" style="left: 75%; top: 55%;">
-                <div class="hotspot-tooltip" style="left: -280px; top: -20px;">
-                    <div class="tooltip-title">Zone B: Work Nook</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Cognac leather reading chair by bay window with walnut side table for laptop or books. Individual work zone.</div>
-                </div>
-            </div>
-        </div>
-        <div class="regenerate-section">
-            <label for="guidance-7">Refine this concept</label>
-            <input type="text" id="guidance-7" placeholder="e.g. Different zone divider, add desk…" data-concept-id="7">
-            <button type="button" class="regenerate-btn" data-concept-id="7">Regenerate</button>
-        </div>
-        <div class="concept-details">
-            <div>
-                <h3>Layout Goals</h3>
-                <p class="design-goal" data-concept-id="7">Two zones: A) camel sofa + cognac leather chairs around fireplace for socializing and games. B) cognac leather reading chair by bay window with side table for laptop/books—individual work. MCM furniture throughout.</p>
-            </div>
-            <div>
-                <h3>Prompt Used</h3>
-                <div class="prompt-text prompt-display" data-concept-id="7">Interior design photo of a mid-century modern living room with two zones. Zone A: camel leather sofa and two cognac leather chairs around fireplace on one large rug—conversation and games. Zone B: single cognac leather reading chair by bay window with walnut side table (laptop/books), floor lamp—individual work nook on second smaller rug. Back of sofa as soft divider. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM furniture throughout: Eames-style, walnut, brass. Seats 4+ with space for solo work. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.</div>
-            </div>
-        </div>
-    </article>
-
-    <article class="concept">
-        <div class="concept-number">Layout 04</div>
-        <h2>Flexible Seating</h2>
-        <div class="image-container" data-concept-id="8">
-            <img src="images/layout_04_traffic_flow.jpg?v=2" alt="Flexible Seating layout" data-index="8" onclick="openLightbox(8)" onerror="this.src='images/original_living_room.jpg'">
-            <div class="spinner-overlay">
-                <div class="spinner"></div>
-                <span class="spinner-text">Generating with Nano Banana Pro…</span>
-            </div>
-            <div class="hotspot" style="left: 15%; top: 50%;">
-                <div class="hotspot-tooltip" style="left: 24px; top: -40px;">
-                    <div class="tooltip-title">Leather Club Chair</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Cognac leather club chair in the mix. Flexible seating for socializing, reading, or gaming.</div>
-                </div>
-            </div>
-            <div class="hotspot" style="left: 50%; top: 30%;">
-                <div class="hotspot-tooltip" style="left: -140px; top: 28px;">
-                    <div class="tooltip-title">Game Table</div>
-                    <div class="tooltip-line"></div>
-                    <div class="tooltip-text">Large walnut coffee table for board games. Mix of sofa, leather chair, fabric chairs, ottomans—seats 4+.</div>
-                </div>
-            </div>
-        </div>
-        <div class="regenerate-section">
-            <label for="guidance-8">Refine this concept</label>
-            <input type="text" id="guidance-8" placeholder="e.g. Widen pathway, adjust console…" data-concept-id="8">
-            <button type="button" class="regenerate-btn" data-concept-id="8">Regenerate</button>
-        </div>
-        <div class="concept-details">
-            <div>
-                <h3>Layout Goals</h3>
-                <p class="design-goal" data-concept-id="8">Flexible mix: camel leather sofa, cognac leather club chair, fabric accent chairs, ottomans. Large coffee table for games. Seats 4+. Supports socializing, individual work, gaming. Clear pathways. MCM vibe.</p>
-            </div>
-            <div>
-                <h3>Prompt Used</h3>
-                <div class="prompt-text prompt-display" data-concept-id="8">Interior design photo of a mid-century modern living room. Flexible seating: camel leather sofa, cognac leather club chair, two fabric accent chairs, ottomans. Furniture arranged for 36-inch pathways—clear flow from arched entry. Large walnut coffee table for games. Seats 4+ with mix of seating types. Supports socializing, individual work (chair with side table), gaming. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM: tapered legs, walnut, brass, warm neutrals. Vintage Persian rug. Natural circulation, no weaving. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.</div>
-            </div>
-        </div>
-    </article>
-
-</section>
-</div>
-</div>
-
 <footer>
     Images generated with Gemini 3 Pro Image via Nano Banana Pro MCP &middot; Regenerate with your own guidance below &middot; February 2026
 </footer>
@@ -966,11 +779,7 @@
         { src: 'images/01_midcentury_modern.jpg', caption: 'Concept 01 — Mid-Century Modern Warmth' },
         { src: 'images/02_scandinavian_minimalist.jpg', caption: 'Concept 02 — Scandinavian Minimalist' },
         { src: 'images/03_moody_library.jpg', caption: 'Concept 03 — Moody Library Lounge' },
-        { src: 'images/04_california_bohemian.jpg', caption: 'Concept 04 — California Bohemian' },
-        { src: 'images/layout_01_conversation.jpg?v=2', caption: 'Layout 01 — Conversation Circle' },
-        { src: 'images/layout_02_proportion.jpg?v=2', caption: 'Layout 02 — Sectional + Leather Chair' },
-        { src: 'images/layout_03_two_zones.jpg?v=2', caption: 'Layout 03 — Two-Zone Layout' },
-        { src: 'images/layout_04_traffic_flow.jpg?v=2', caption: 'Layout 04 — Flexible Seating' }
+        { src: 'images/04_california_bohemian.jpg', caption: 'Concept 04 — California Bohemian' }
     ];
 
     const CONCEPT_DATA = {
@@ -989,22 +798,6 @@
         4: {
             designGoal: "Bring the relaxed, sun-drenched energy of California indoor-outdoor living into the space. Natural and organic materials take center stage—rattan, jute, live-edge wood, woven textiles, and clay. The room becomes a botanical sanctuary with lush indoor plants throughout. Earth tones of terracotta, amber, olive, and cream replace the current cool palette. A rattan peacock chair and woven pendant light add sculptural interest, while layered rugs and oversized linen cushions create an inviting, lived-in comfort.",
             prompt: "Redesign this living room in a California bohemian organic modern style, keeping the same room architecture and layout - arched doorway on left, bay windows on right, centered fireplace with marble surround and wood mantel. Replace the gray sofa with a deep cream off-white linen sofa with oversized cushions and a relaxed lived-in look, draped with a terracotta-colored woven throw blanket. Replace the wingback chair with a large natural rattan peacock chair with a white sheepskin throw. Swap the Moroccan rug for a large natural jute rug layered with a smaller vintage Turkish kilim in warm earth tones - terracotta, amber, olive. Replace the IKEA bookshelf with open rattan and light wood shelving filled with ceramics, trailing pothos plants, woven baskets, and artisan pottery. Add many lush indoor plants throughout - a large fiddle leaf fig tree in a woven basket planter in the corner, hanging trailing plants, potted snake plants, a cluster of succulents on the coffee table. Replace the coffee table with a live-edge wood slab coffee table on a black iron base. Replace the chandelier with a large woven rattan pendant light. Keep the fireplace, place dried pampas grass arrangement in a clay vase on the mantel. Warm terracotta and mustard throw pillows. Woven wall hanging on one wall. Bright airy natural California sunlight streaming in. Photorealistic interior design photography, warm golden natural light, wide angle lens."
-        },
-        5: {
-            designGoal: "Conversation circle with different MCM furniture: camel leather sofa, two cognac leather Eames-style chairs. Seats 4–6. Large coffee table for games. Fireplace as focal point. Supports socializing and group play.",
-            prompt: "Interior design photo of a mid-century modern living room. Conversation circle layout: camel leather sofa and two cognac leather Eames-style lounge chairs arranged in a circle around the marble fireplace. Seats 4-6. Large round walnut coffee table centered for board games. Walnut side tables. Warm vintage Persian rug anchors the group. Room: dark hardwood, marble fireplace with wood mantel, bay windows, bookshelf wall. MCM aesthetic: clean lines, tapered legs, brass accents. Texture contrast: supple leather against polished marble, matte walnut. Nelson Bubble pendant. Warm afternoon light. Supports socializing and group games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic."
-        },
-        6: {
-            designGoal: "L-shaped sectional in oat boucle plus cognac leather armchair. Game-sized coffee table. Seats 4+. Supports socializing, individual reading, and board games. MCM vibe throughout.",
-            prompt: "Interior design photo of a mid-century modern living room. L-shaped sectional in warm oat boucle or linen, plus a cognac leather armchair with walnut frame. Sectional faces fireplace; leather chair at the corner for flexible seating. Large rectangular walnut coffee table (game-sized) between seating. Seats 4+. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Sofa 60-75% of wall; coffee table 50-67% of sofa length. Area rug large enough for all front legs. MCM: tapered legs, brass arc lamp, walnut shelving. Supports socializing, individual reading, board games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic."
-        },
-        7: {
-            designGoal: "Two zones: A) camel sofa + cognac leather chairs around fireplace for socializing and games. B) cognac leather reading chair by bay window with side table for laptop/books—individual work. MCM furniture throughout.",
-            prompt: "Interior design photo of a mid-century modern living room with two zones. Zone A: camel leather sofa and two cognac leather chairs around fireplace on one large rug—conversation and games. Zone B: single cognac leather reading chair by bay window with walnut side table (laptop/books), floor lamp—individual work nook on second smaller rug. Back of sofa as soft divider. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM furniture throughout: Eames-style, walnut, brass. Seats 4+ with space for solo work. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic."
-        },
-        8: {
-            designGoal: "Flexible mix: camel leather sofa, cognac leather club chair, fabric accent chairs, ottomans. Large coffee table for games. Seats 4+. Supports socializing, individual work, gaming. Clear pathways. MCM vibe.",
-            prompt: "Interior design photo of a mid-century modern living room. Flexible seating: camel leather sofa, cognac leather club chair, two fabric accent chairs, ottomans. Furniture arranged for 36-inch pathways—clear flow from arched entry. Large walnut coffee table for games. Seats 4+ with mix of seating types. Supports socializing, individual work (chair with side table), gaming. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM: tapered legs, walnut, brass, warm neutrals. Vintage Persian rug. Natural circulation, no weaving. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic."
         }
     };
 
@@ -1120,17 +913,6 @@
                 const conceptId = parseInt(input.dataset.conceptId, 10);
                 regenerateConcept(conceptId);
             }
-        });
-    });
-
-    // Tab switching
-    document.querySelectorAll('.tab-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            const tab = btn.dataset.tab;
-            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-            document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-            btn.classList.add('active');
-            document.getElementById('tab-' + tab).classList.add('active');
         });
     });
 </script>

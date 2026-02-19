@@ -13,28 +13,29 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const IMAGES_DIR = join(ROOT, "images");
 
-// Prompts informed by interior design skill: warm American modernism, Room & Board aesthetic,
-// spatial planning (60-30-10, proportion guidelines, circulation), texture contrast, layered lighting.
+// Layout concepts: different MCM furniture + arrangements. Seats 4+, supports socializing,
+// individual work, gaming. At least one layout with leather chair. Interior design skill: warm
+// American modernism, walnut/camel/cognac, tapered legs, texture contrast, 4-8ft conversation distance.
 const LAYOUT_PROMPTS = [
   {
     file: "layout_01_conversation.jpg",
     prompt:
-      "Interior design photo of a living room with OPTIMIZED LAYOUT for conversation. Warm American modernism, Room & Board aesthetic. Gray sofa and neutral upholstery in warm oat and sandstone tones. Pull the sofa away from the wall to create a conversation circle around the marble fireplace as focal point. Two chairs face the sofa within 4-8 feet—optimal conversation distance. Coffee table centered in the seating group, 18 inches from sofa. Side tables flanking the sofa. Clear 36-inch pathways. Room architecture: dark hardwood floors, marble fireplace with wood mantel, bay windows with crown molding, bookshelf wall. Texture contrast: soft upholstery against polished marble, matte wood side tables. Layered lighting: ambient overhead, table lamps at seated eye level. Natural light from bay windows. Warm, inviting, lived-in quality. Editorial interior photography style, wide angle lens, photorealistic.",
+      "Interior design photo of a mid-century modern living room. Conversation circle layout: camel leather sofa and two cognac leather Eames-style lounge chairs arranged in a circle around the marble fireplace. Seats 4-6. Large round walnut coffee table centered for board games. Walnut side tables. Warm vintage Persian rug anchors the group. Room: dark hardwood, marble fireplace with wood mantel, bay windows, bookshelf wall. MCM aesthetic: clean lines, tapered legs, brass accents. Texture contrast: supple leather against polished marble, matte walnut. Nelson Bubble pendant. Warm afternoon light. Supports socializing and group games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
   },
   {
     file: "layout_02_proportion.jpg",
     prompt:
-      "Interior design photo of a living room with OPTIMIZED PROPORTION AND SCALE. Warm American modernism, Room & Board aesthetic. Sofa sized to 60-75% of the wall it faces. Coffee table 50-67% of sofa length, 1-2 inches below seat height. Area rug large enough that all front legs of sofa and chairs sit on it—rug anchors the seating group. Gray sofa, neutral rug in warm cream or taupe. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Side tables within 2 inches of sofa arm height. Clean-lined furniture, tapered legs, timeless proportions. Texture balance: boucle or linen upholstery, solid wood coffee table. Warm afternoon light. Warm, inviting, lived-in quality. Editorial interior photography style, wide angle lens, photorealistic.",
+      "Interior design photo of a mid-century modern living room. L-shaped sectional in warm oat boucle or linen, plus a cognac leather armchair with walnut frame. Sectional faces fireplace; leather chair at the corner for flexible seating. Large rectangular walnut coffee table (game-sized) between seating. Seats 4+. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Sofa 60-75% of wall; coffee table 50-67% of sofa length. Area rug large enough for all front legs. MCM: tapered legs, brass arc lamp, walnut shelving. Supports socializing, individual reading, board games. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
   },
   {
     file: "layout_03_two_zones.jpg",
     prompt:
-      "Interior design photo of a living room with TWO-ZONE LAYOUT. Warm American modernism, Room & Board aesthetic. Zone A: main conversation group—sofa, two chairs, coffee table—arranged around the fireplace on one large area rug. Zone B: reading nook by the bay window—single chair, small side table, floor lamp—on a second smaller rug. Rugs define zones without walls. Gray sofa, neutral palette. Room architecture: dark hardwood, marble fireplace, bay windows, bookshelf wall. Back of sofa acts as soft divider. Layered lighting: table lamps in both zones. Natural light from bay window in reading nook. Texture: upholstered seating, wood side tables, woven rug. Warm, inviting, lived-in quality. Editorial interior photography style, wide angle lens, photorealistic.",
+      "Interior design photo of a mid-century modern living room with two zones. Zone A: camel leather sofa and two cognac leather chairs around fireplace on one large rug—conversation and games. Zone B: single cognac leather reading chair by bay window with walnut side table (laptop/books), floor lamp—individual work nook on second smaller rug. Back of sofa as soft divider. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM furniture throughout: Eames-style, walnut, brass. Seats 4+ with space for solo work. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
   },
   {
     file: "layout_04_traffic_flow.jpg",
     prompt:
-      "Interior design photo of a living room with OPTIMIZED TRAFFIC FLOW. Warm American modernism, Room & Board aesthetic. Clear 36-inch primary pathway from arched doorway to living area. Secondary paths at least 24 inches between seating and fireplace. Media console or bookshelf positioned to avoid blocking flow to bay window or fireplace. Furniture arranged for natural circulation—no weaving between pieces. Gray sofa, neutral rug, same warm inviting palette. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. Clean-lined furniture placement honors the architecture. Texture contrast: soft upholstery, wood case goods. Layered lighting. Natural light. Warm, inviting, lived-in quality. Editorial interior photography style, wide angle lens, photorealistic.",
+      "Interior design photo of a mid-century modern living room. Flexible seating: camel leather sofa, cognac leather club chair, two fabric accent chairs, ottomans. Furniture arranged for 36-inch pathways—clear flow from arched entry. Large walnut coffee table for games. Seats 4+ with mix of seating types. Supports socializing, individual work (chair with side table), gaming. Room: dark hardwood, marble fireplace, bay windows, bookshelf wall. MCM: tapered legs, walnut, brass, warm neutrals. Vintage Persian rug. Natural circulation, no weaving. Warm, inviting, lived-in quality. Editorial interior photography, wide angle lens, photorealistic.",
   },
 ];
 
